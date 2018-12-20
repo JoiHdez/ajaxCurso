@@ -1,0 +1,1 @@
+Sirve para actulizar una pagina web y enviar y recibir informcaion hacia un servidor 

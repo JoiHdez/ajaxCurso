@@ -1,0 +1,73 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Curso AJAX</title>
+	</head>
+	<body>
+		Aprendimos a usar el metodo XMLHttpRequest <br>
+		<button onclick="ejecuarAJAX()">Hazme click</button>
+		<div id="infoAJAX"></div>
+		-------------------- <br>
+		<button onclick="ejecutarAJAXJSON()">Mostrar datos</button>
+		<div id="infoJSON"></div>
+		-------------------- <br>
+
+		<script type="text/javascript">
+			function ejecuarAJAX() {
+				var ajaxResquest;
+
+				//Verificar el navagador cual estamos utilizando
+				if(window.XMLHttpRequest){
+					ajaxResquest = new XMLHttpRequest();
+				} else {
+					ajaxResquest = new ActiveObject("Microsft.XMLHTTP")
+				}
+
+				// Distintos valores de la propiedad readyState //
+				// 0 Peticion no ha sido inicializada
+				// 1 Peticion ha sido establecida
+				// 2 Peticion ha sido enviada
+				// 3 Peticion esta siendo procesada
+				// 4 Peticion ha sido finalizada
+
+				var ajaxResquest = new XMLHttpRequest();
+				ajaxResquest.onreadystatechange = function() {
+					if (ajaxResquest.readyState == 4 && ajaxResquest.status == 200) {
+						document.getElementById("infoAJAX").innerHTML = ajaxResquest.responseText;
+					}
+				}
+				ajaxResquest.open("GET", "documen.txt", true);
+				ajaxResquest.send();
+			}
+		</script>
+
+		<script type="text/javascript">
+			var resultado = document.getElementById("infoJSON");
+			function ejecutarAJAXJSON () {
+				var XMLHTTP;
+
+				//Verificar el navagador cual estamos utilizando
+				if(window.XMLHttpRequest){
+					XMLHTTP = new XMLHttpRequest();
+				} else {
+					XMLHTTP = new ActiveObject("Microsft.XMLHTTP")
+				}
+
+				XMLHTTP.onreadystatechange = function(){
+					if (XMLHTTP.readyState == 4 && XMLHTTP.status == 200){
+						var datos = JSON.parse(XMLHTTP.responseText);
+						if(resultado.innerHTML == ""){
+							for(var i in datos){
+								resultado.innerHTML += i + ": " + datos[i] + "<br/>";
+							}
+						}
+					}
+				}
+
+				XMLHTTP.open("GET", "datos.json", true);
+				XMLHTTP.send();
+			}
+		</script>
+
+	</body>
+</html>
